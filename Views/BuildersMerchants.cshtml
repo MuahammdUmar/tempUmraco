@@ -1,0 +1,27 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.BuildersMerchants>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "_Layout.cshtml";
+}
+
+<section class="inner-banner portfolio-inner-banner" style="background-image: url(@Model.Value("mainImage")">
+    <div class="container">
+        <h1>@Model.Name</h1>
+    </div>
+</section>
+
+<section class="introduction service-detail-intro">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-10 mx-auto">
+                <div class="info-panel text-center">
+                    <h1 class="text-primary">@Model.Value("heading")</h1>
+                    @Model.Value("description")
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@await Umbraco.RenderMacroAsync("OurPromise")
+@await Umbraco.RenderMacroAsync("GetInTouch")

@@ -1,0 +1,33 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.MeetTheTeam>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "_Layout.cshtml";
+    var teamItems = Model.Value<IEnumerable<IPublishedElement>>("teamItem");
+}
+
+<section class="inner-banner portfolio-inner-banner" style="background-image: url(@Model.Value("mainImage")">
+    <div class="container">
+        <h1>@Model.Name</h1>
+    </div>
+</section>
+
+<section class="meet-the-team">
+    <div class="container">
+        @foreach (var teamItem in teamItems)
+        {
+            var teamItemImage = teamItem.Value<IPublishedContent>
+            ("itemImage");
+            <div class="row team-panel">
+                <div class="col-md-8">
+                    <h1>@teamItem.Value("itemHeading")</h1>
+                    <h3>@teamItem.Value("itemSmallHeading")</h3>
+                    @teamItem.Value("itemDescription")
+                </div>
+                <div class="col-md-4">
+                    <img class="img-fluid" src="@teamItemImage.Url()" alt="teamItemImage.Name" />
+                </div>
+            </div>
+        }
+    </div><!--container-->
+</section>

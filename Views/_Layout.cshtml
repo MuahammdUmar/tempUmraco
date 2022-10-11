@@ -1,0 +1,94 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.AncestorOrSelf(1);
+}
+
+<html>
+<head>
+    <!-- Start cookieyes banner -->
+    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/450724f8903a20dff2024bdc/script.js"></script>
+    <!-- End cookieyes banner -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <meta name="description" content="ClassicBricks">
+    <meta name="ClassicBricks" property="ClassicBricks" content="ClassicBricks">
+    <title>ClassicBrick - @Model.Name</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="/css/app.css" rel="stylesheet" />
+    <link href="/css/lightbox.min.css" rel="stylesheet" />
+    <link rel='stylesheet' type='text/css' media='screen' href='~/css/flexslider.css'>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- favicon-->
+    <link rel="shortcut icon" href="/media/d5wj0wrz/favicon.ico" type="image/x-icon.ico" />
+    <script src="/scripts/lightbox-plus-jquery.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="/scripts/jquery.flexslider.js"></script>
+
+</head>
+<body>
+    @await Umbraco.RenderMacroAsync("Navigation")
+    @RenderBody()
+    @await Umbraco.RenderMacroAsync("Footer")
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"></script>
+   @* <script src="https://cc.cdn.civiccomputing.com/9/cookieControl-9.x.min.js"></script>*@
+    @*<script>
+        var config = {
+            apiKey: '2f380903cbe2c5acf3ef5f0e85e3c61f3bc71a84',
+            product: 'COMMUNITY',
+            text: {
+                title: 'OUR USE OF COOKIES',
+                intro: '<p>We use necessary cookies to make our site work.We\'d also like to set analytics cookies that help us make improvements by measuring how you use the site. These will be set only if you accept. For more detailed information about the cookies we use,see our <a href="/eng/cookies-policy" target="blank"> Cookies page.<span class="ccc-svg-element"></span></a></p>',
+                acceptSettings: "Accept All Cookies",
+                rejectSettings: "Reject All Cookies",
+                necessaryTitle: 'Necessary Cookies',
+                necessaryDescription: 'Necessary cookies enable core functionality such as page navigation and access to secure areas. The website cannot function properly without these cookies, and can only be disabled by changing your browser preferences.'
+            },
+            setInnerHTML: true,
+            optionalCookies: [
+                {
+                    name: 'analytics',
+                    label: 'Analytical Cookies',
+                    description: 'Analytical cookies help us to improve our website by collecting and reporting information on its usage.',
+                    cookies: ['_ga', '_gid', '_gat'],
+                    onAccept: function() {
+                        // Add Google Analytics
+                        (function(i, s, o, g, r, a, m) {
+                            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function() {
+                                (i[r].q = i[r].q || []).push(arguments)
+                            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+                        ga('create', 'empty', 'auto');
+                        ga('send', 'pageview');
+                        // End Google Analytics
+                    },
+                    onRevoke: function() {
+                        // Disable Google Analytics
+                        window['ga-disable-empty'] = true;
+                        // End Google Analytics
+                        location.reload();
+                    }
+                }
+            ],
+
+            position: 'LEFT',
+            theme: 'DARK'
+        };
+
+        CookieControl.load(config);
+    </script>*@
+
+</body>
+
+@RenderSection("AdditionalScripts", false)
+</html>

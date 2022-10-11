@@ -1,0 +1,96 @@
+﻿@inherits Umbraco.Cms.Web.Common.Macros.PartialViewMacroPage
+<section class="footer">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 col-12 mb-3 mb-lg-0">
+                    <div class="info-panel">
+                        <h2 class="text-primary">Classic Brick</h2>
+                    </div>
+
+                    <div class="footer-nave">
+                        <div class="footer-list">
+                            <a href="/">
+                                Home
+                            </a>
+                            <a href="/about-us">
+                                About Us
+                            </a>
+                            <a href="/products">
+                                products
+                            </a>
+                            <a href="/portfolio">
+                                Portfolio
+                            </a>
+                            <a href="/contact-us">
+                                Contact Us
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6 col-12 mb-3 mb-lg-0">
+                    <div class="info-panel">
+                        <h2 class="text-primary">Products</h2>
+                    </div>
+
+                    <div class="footer-nave">
+                        <div class="footer-list">
+                            @*<a href="/products/bricks">
+                                Bricks
+                            </a>*@
+                            <a href="/products/metric-bricks/">
+                                Metric Bricks
+                            </a>
+                            <a href="/products/imperial-bricks/">
+                                Imperial Bricks
+                            </a>
+                            <a href="/products/slips">
+                                Slips
+                            </a>
+                            <a href="/products/specials">
+                                Specials
+                            </a>                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6 col-12 mb-3 mb-lg-0">
+                    <div class="info-panel">
+                        <h2 class="text-primary">Contact Us</h2>
+                    </div>
+
+                    <div class="footer-nave">
+                        <div class="footer-list footer-list2">
+                            <a class="text-transform-none">
+                                <span><img src="/media/m34ko2qj/home.png" alt="logo" /></span>
+                                Toppesfield Hall Farm, Great Yeldham Road, Toppesfield, Essex, CO9 4LS
+                            </a>
+                            <a class="footer-email" href="mailto:sales@classicbrick.co.uk" class="mail">
+                                <span><img src="/media/1s0h3xnn/email.png" alt="logo" /></span> sales@classicbrick.co.uk
+                            </a>
+                            <a class="text-transform-none">
+                                <span><img src="/media/j23jm03o/phone.png" alt="logo" /></span> Office: 01787 813128
+                            </a>
+
+                            <a class="text-transform-none">
+                                <span><img src="/media/j23jm03o/phone.png" alt="logo" /></span> Steve: 07918 602876
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+    </section>
+
+    <section class="copy-right text-center">
+        <div class="container">
+            <p class="mb-0">
+                © @DateTime.Now.Year.ToString() The Classic Brick Company Ltd | All Rights Reserved | <a href="/privacy-policy/">Privacy
+                    Policy</a> | <a href="/cookies-policy/">Cookies Policy</a>
+            </p>
+            <p>Registered in England: 6546115 | VAT No: 348 3496 66</p>
+        </div>
+    </section>

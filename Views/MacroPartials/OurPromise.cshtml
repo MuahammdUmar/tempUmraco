@@ -1,0 +1,40 @@
+﻿@inherits Umbraco.Cms.Web.Common.Macros.PartialViewMacroPage
+@{
+    var root = Model.Content.AncestorOrSelf(1);
+    var promise = root.Value<IEnumerable<IPublishedElement>>("promiseItem");
+}
+
+@*==== Our Promises ====*@
+<section class="our-promise">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-8 mx-auto">
+                <div class="info-panel text-center">
+                    <h1 class="text-primary">@root.Value("promiseHeading")</h1>
+                    @root.Value("promiseDescription")
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-60">
+            @foreach (var promiseItem in promise)
+            {
+                <div class="col-lg-4 col-sm-6 col-12 mb-4 mb-lg-0">
+                    <div class="card h-100 custom-card">
+                        <div class="card-body">
+                            <h3 class="text-secondary">@promiseItem.Value("itemHeading")</h3>
+                            @promiseItem.Value("itemDescription")
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+
+        <div class="text-center">
+            <a class="btn btn-primary btn-sm btn-rounded" href="/products">
+                View Product
+            </a>
+        </div>
+    </div>
+</section>

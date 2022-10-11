@@ -1,0 +1,245 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Home>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "_Layout.cshtml";
+
+    var carousel = Model.Value<IEnumerable<IPublishedElement>>("carouselItem");
+    var carouselcount = 0;
+    var product = Model.Value<IEnumerable<IPublishedElement>>("productItem");
+    var help = Model.Value<IEnumerable<IPublishedElement>>("helpItem");
+
+    var feed = Model.Value<IEnumerable<IPublishedElement>>("linkedInItem");
+
+    var testimonial = Model.Value<IEnumerable<IPublishedElement>>("testimonialItem");
+    var testimonialcount = 0;
+}
+
+@*===== Hero section =====*@
+<section class="banner">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach (var item in carousel)
+            {
+                var image = item.Value<IPublishedContent>("itemImage");
+                if (carouselcount == 0)
+                {
+                    <div class="carousel-item active">
+                        <img src="@image.Url()" class="d-block w-100" alt="@image.Name">
+
+                        <div class="carousel-caption d-none d-md-block text-start">
+                            <h1 class="bg-white text-secondary d-inline-block">
+                                @item.Value("itemHeading")
+                            </h1>
+                            <br>
+                            <h1 class="bg-secondary text-white d-inline-block">
+                                @item.Value("itemSmallHeading")
+                            </h1>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="carousel-item ">
+                        <img src="@image.Url()" class="d-block w-100" alt="@image.Name">
+
+                        <div class="carousel-caption d-none d-md-block text-start">
+                            <h1 class="bg-white text-secondary d-inline-block">
+                                @item.Value("itemHeading")
+                            </h1>
+                            <br>
+                            <h1 class="bg-secondary text-white d-inline-block">
+                                @item.Value("itemSmallHeading")
+                            </h1>
+                        </div>
+                    </div>
+                }
+                carouselcount++;
+            }
+
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+@*===== Products =====*@
+
+<section class="feature-products-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            @foreach (var productItem in product)
+            {
+                var productImage = productItem.Value<IPublishedContent>("itemImage");
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-products">
+                        <a href="@productItem.Value("link")">
+                            <img src="@productImage.Url()" alt="logo" />
+                            <h3>@Html.Raw(productItem.Value("itemHeading"))</h3>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@*===== Help =====*@
+<section class="help-section" style="background: url(/media/ziinu5ih/help-banner.png), left top no-repeat;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="info-panel text-center">
+                    <h1 class="text-white">@Model.Value("helpHeading")</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            @foreach (var helpItem in help)
+            {
+                var helpImage = helpItem.Value<IPublishedContent>("itemImage");
+                <a href="@helpItem.Value("link")" class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4 mb-lg-4 mb-xl-0">
+                    <div class="services-details">
+                        <img src="@helpImage.Url()" alt="@helpImage.Name" />
+                        <h2>@helpItem.Value("itemHeading")</h2>
+                    </div>
+                </a>
+
+            }
+        </div>
+    </div>
+</section>
+
+@*===== Testimonials =====*@
+<section class="our-clients">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="info-panel text-center">
+                    <span class="sub-heading">@Model.Value("testimonialSmallHeading")</span>
+                    <h1 class="text-primary">@Model.Value("testimonialHeading")</h1>
+                    @Model.Value("testimonialDescription")
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slider-section">
+    <div class="container">
+        <div id="innerSlider" class="carousel carousel-dark slide inner-slider" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#innerSlider" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#innerSlider" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#innerSlider" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+
+                @foreach (var items in testimonial)
+                {
+                    var testimonialImage = items.Value<IPublishedContent>("itemImage");
+                    if (testimonialcount == 0)
+                    {
+                        <div class="carousel-item active" data-bs-interval="10000">
+                            <div class="row g-0">
+                                <div class="col-md-4 testimonialCarouselItem">
+                                    <img src="@testimonialImage.Url()" class="d-block w-100" alt="@testimonialImage.Name">
+
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="slider-body">
+                                        <div>
+                                            @items.Value("itemDescription")
+                                            <h5> @items.Value("itemHeading")</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="carousel-item" data-bs-interval="10000">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="@testimonialImage.Url()" class="d-block w-100" alt="@testimonialImage.Name">
+
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="slider-body">
+                                        <div>
+                                            @items.Value("itemDescription")
+                                            <h5> @items.Value("itemHeading")</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    testimonialcount++;
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Umbraco.RenderMacroAsync("GetInTouch")
+
+@*===== LinkedIn =====*@
+<section class="our-clients linkedIn">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="info-panel text-center">
+                    <span class="sub-heading">@Model.Value("linkedInSmallHeading")</span>
+                    <h1 class="text-primary">@Model.Value("linkedInHeading")</h1>
+                    @Model.Value("linkedInDescription")
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*<section class="introduction">
+    <div class="row mb-4">
+
+        @foreach (var feedItem in feed)
+        {
+            var feedImage = feedItem.Value<IPublishedContent>("itemImage");
+
+            <div class="col-lg col-md-6 col-12 mb-4 mb-lg-0">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="text-primery">
+                            @feedItem.Value("itemHeading")
+                        </h4>
+                        @feedItem.Value("itemDescription")
+
+                    </div>
+                    <img src="@feedImage.Url()" class="card-img-bottom" alt="logo" class="@feedImage.Name">
+                </div>
+            </div>
+
+        }
+    </div>
+</section>*@
+
+<div class='sk-ww-linkedin-page-post introduction' data-embed-id='95062'></div>
+<script src='https://widgets.sociablekit.com/linkedin-page-posts/widget.js' async defer></script>

@@ -1,0 +1,16 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Products>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "_Layout.cshtml";    
+        
+}
+
+<section class="inner-banner" style="background: url(@Model.Value("mainImage")) center center no-repeat;">
+    <div class="container">
+        <h1>@Model.Name()</h1>
+    </div>
+</section>
+
+@await Umbraco.RenderMacroAsync("HomeProducts")
+@await Umbraco.RenderMacroAsync("GetInTouch")

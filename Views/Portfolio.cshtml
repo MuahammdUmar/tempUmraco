@@ -1,0 +1,81 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Portfolio>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "_Layout.cshtml";
+	var portfolio = Model.Value<IEnumerable<IPublishedElement>>("portfolioItem");
+}
+
+<section class="inner-banner portfolio-inner-banner" style="background-image: url(@Model.Value("mainImage")">
+    <div class="container">
+        <h1>@Model.Name</h1>
+    </div>
+</section>
+
+<section class="introduction service-detail-intro">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-10 mx-auto">
+                <div class="info-panel text-center">
+                    <h1 class="text-primary">@Model.Value("heading")</h1>
+                    @Model.Value("description")
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="portfolio-section">
+    <div class="container">
+        <div id="myList" class="row gx-4 gallery">
+            @foreach (var portfolioItem in portfolio)
+            {
+                var portfolioImage = portfolioItem.Value<IPublishedContent>("itemImage");
+            
+                <a class="col-md-4 col-lg-3 col-sm-6 display-products" href="@portfolioImage.Url()" data-lightbox="mygallery">
+                    <img class="img-fluid" src="@portfolioImage.Url()" alt="portfolio-img" />
+                </a>
+                
+            }
+
+        </div>
+
+        <div class="row justify-content-center load-more-pannel">
+            <div class="col text-center">
+                <button id="loadMore" class="btn btn-primary ">Load More</button>
+            </div>
+        </div>
+    </div><!--container-->
+</section>
+
+@await Umbraco.RenderMacroAsync("GetInTouch")
+
+<style>
+    .display-products {
+        display: none;
+    }
+
+    #loadMore {
+        display: none;
+    }
+</style>
+
+<script>
+    x = 8;
+    $('#myList  .display-products:lt(' + x + ')').show();
+    size_li = $("#myList  .display-products").length;
+    
+    if (size_li > x) {
+        $('#loadMore').show();
+    }
+    
+    document.getElementById("loadMore").addEventListener("click", displayDate);
+    function displayDate() {
+        size_li = $("#myList  .display-products").length;
+        x = (x + 8 <= size_li) ? x + 8 : size_li;   
+        $('#myList  .display-products:lt(' + x + ')').show();
+        if (x == size_li) {
+            $('#loadMore').hide();
+        }
+    }
+</script>

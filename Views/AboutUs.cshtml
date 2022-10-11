@@ -1,0 +1,51 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.AboutUs>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "_Layout.cshtml";
+}
+
+<section class="inner-banner" style="background: url(@Model.Value("mainImage")) center center no-repeat;">
+    <div class="container">
+        <h1>@Model.Name</h1>
+    </div>
+</section>
+
+<section class="about-us">
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-md-6 col-sm-12">
+                <div class="img-panel">
+                    <img src="@Model.Value("smallImage")" alt="img">
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <div class="about-panel">
+                    <h1>@Model.Value("heading")</h1>
+                    @Model.Value("description")
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="find-us">
+    <div class="row g-0">
+        <div class="col-md-8 col-sm-12">
+            <div class="about-panel">
+                @Model.Value("locationDescription")
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="img-panel about-map">
+                <img src="@Model.Value("locationImage")" class="w-100" alt="img">
+                <p>Enquiries to <a href="mailto:sales@classicbrick.co.uk" class="text-secondary mt-3 link">sales@classicbrick.co.uk</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Umbraco.RenderMacroAsync("OurPromise")
+@await Umbraco.RenderMacroAsync("GetInTouch")

@@ -1,0 +1,71 @@
+﻿@inherits Umbraco.Cms.Web.Common.Macros.PartialViewMacroPage
+@{
+    var root = Model.Content.AncestorOrSelf(1);
+    var children = Umbraco.ContentAtRoot().FirstOrDefault()
+        .Children()
+        .Where(x => x.IsVisible());
+}
+
+<header class="header">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="@root.Url()">
+                    <img src="/media/nhqkmxwx/logo.png" alt="ClassicBricks" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link @(Model.Content.Url() == root.Url() ? "active" : null )" aria-current="page" href="@root.Url()">@root.Name()</a>
+                        </li>
+
+                        @foreach (var child in children)
+                        {
+                            var subChildren = child.Children().Where(x => x.IsVisible());
+
+                            @if (subChildren.Any())
+                            {
+                                <li class="nav-item dropdown">
+                                    <a href="@child.Url()" class="nav-link d-in @(child.IsAncestorOrSelf(Model.Content) ? "active" : null)">
+                                        @child.Name()
+                                    </a>
+                                    <a class="@(child.IsAncestorOrSelf(Model.Content) ? "active" : null) d-in" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        @foreach (var subChild in subChildren)
+                                        {
+                                            <li class="nav-link"><a class="dropdown-item @(subChild.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@subChild.Url()">@subChild.Name()</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a href="@child.Url()" class="nav-link @(child.IsAncestorOrSelf(Model.Content) ? "active" : null)">@child.Name()</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<script>
+    $(window).scroll(function() {
+        var sticky = $('.header'),
+            scroll = $(window).scrollTop();
+        if (scroll >= 100) sticky.addClass('fixed');
+        else sticky.removeClass('fixed');
+    });
+</script>

@@ -1,0 +1,139 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.ProductCategories>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Services;
+@using Umbraco.Cms.Core.PropertyEditors;
+@using static CBWEB.Helpers.UmbracoEnums;
+@inject IDataTypeService DataTypeService;
+@{
+    Layout = "_Layout.cshtml";
+    var sizes = DataTypeService.GetDataType((int)((DataType)Enum.Parse(typeof(DataType), DataType.sizes.ToString())));
+    var colors = DataTypeService.GetDataType((int)((DataType)Enum.Parse(typeof(DataType), DataType.colors.ToString())));
+    ValueListConfiguration sizesList = (ValueListConfiguration)sizes.Configuration;
+    ValueListConfiguration colorsList = (ValueListConfiguration)colors.Configuration;
+    var pageName = Model.Name();
+}
+
+<section class="inner-banner" style="background: url(@Model.Value("mainImage")) center center no-repeat;">
+    <div class="container">
+        <h1>@Model.Name()</h1>
+    </div>
+</section>
+
+@if (Model.Children().Any())
+{
+    <section class="our-products">
+        <div class="container">
+            <div class="filter">
+                <form class="row">
+                    <div class="col-xl-8 col-lg-6 col-md-6 col-sm-12 align-self-center">
+                        <h4 class="mb-0 transform-upercase">Filter Products</h4>
+                    </div>
+
+                    @*<div class="col-md-4 col-sm-12 align-self-center">
+                        <select class="form-select" id="size-select">
+                            <option value="" selected>All Sizes</option>
+                            @if (sizesList != null && sizesList.Items != null && sizesList.Items.Any())
+                            {
+                                @for (var i = 0; i < sizesList.Items.Count(); i++)
+                                {
+                                    <option value=@sizesList.Items[i].Value>@sizesList.Items[i].Value</option>
+                                }
+                            }
+                        </select>
+                    </div>*@
+
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 align-self-center">
+                        <select class="form-select" id="color-select">
+                            <option value="" selected>All Colors</option>
+                            @if (colorsList != null && colorsList.Items != null && colorsList.Items.Any())
+                            {
+                                @for (var i = 0; i < colorsList.Items.Count(); i++)
+                                {
+                                    <option value=@colorsList.Items[i].Value>@colorsList.Items[i].Value</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row" id="productItemList">
+
+                @foreach (var product in Model.Children())
+                {
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 mb-4 mb-lg-0">
+                        <div class="card custom-card">
+                            <img src="@product.Value("mainImage")" alt="@product.Name()" class="card-img-top">
+                            <div class="card-body product-panel-body">
+                                <h3 class="text-secondary product-heading">@product.Value("heading")</h3>
+                                @product.Value("description")
+                                <a href="@product.Url()" class="btn btn-primary btn-sm btn-rounded">
+                                    View Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </section>
+
+    @await Umbraco.RenderMacroAsync("GetInTouch")
+}
+
+
+@section AdditionalScripts {
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.13.1/additional-methods.min.js" type="text/javascript"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript" async defer>
+        $(function () {
+            $(document).ready(function () {
+                $("#size-select").on('change', function (e) {
+                    loadProducts(e);
+                });
+                $("#color-select").on('change', function (e) {
+                    loadProducts(e);
+                });
+
+            });
+            function loadProducts(e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                var size = $('#size-select').val()
+                var color = $('#color-select').val()
+                $.ajax({
+                    url: '/umbraco/surface/Product/Get',
+                    type: 'GET',
+                    dataType: "json",
+                    data: { Size: size, Color: color, PageName: '@pageName' },
+                }).done(function (response) {
+                    var products = response.products;
+                    var container = $('#productItemList');
+                    container.html("")
+                    for (i = 0; i < products.length; i++) {
+                        var innerText = '<div class="col-lg-4 col-sm-6 col-12 mb-4 mb-lg-0">'
+                            + '<div class="card custom-card">'
+                            + '<img src="' + products[i].image + '" alt="' + products[i].name + '" class="card-img-top" />'
+                            + '<div class="card-body product-panel-body">'
+                            + '<h3 class="text-secondary product-heading">' + products[i].heading + '</h3>'
+                            + products[i].description
+                            + '<a href="' + products[i].link + '" class="btn btn-primary btn-sm btn-rounded">'
+                            + 'View Product'
+                            + '</a>'
+                            + '</div>'
+                            + '</div>'
+                            + '</div>';
+
+                        container.append(innerText);
+                    }
+                }).fail(function (res) {
+                    alert("Sorry. Server unavailable. ");
+                });
+
+            }
+        });
+    </script>
+}
